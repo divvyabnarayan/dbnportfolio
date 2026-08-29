@@ -1,0 +1,109 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons&display=swap");
+
+@theme inline {
+  --color-ink: #121816;
+  --color-ink-soft: #2a322e;
+  --color-muted: #5c6660;
+  --color-line: #d5ddd7;
+  --color-surface: #eef2ef;
+  --color-paper: #f7f9f7;
+  --color-accent: #0f766e;
+  --color-accent-soft: #ccfbf1;
+  --color-glow: #2dd4bf;
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-hand: var(--font-hand);
+  --font-quote: var(--font-quote);
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+  background-color: #0d1210;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background-color: #0d1210;
+  background-image:
+    radial-gradient(1200px 600px at 10% -10%, rgba(45, 212, 191, 0.16), transparent 55%),
+    radial-gradient(900px 500px at 90% 8%, rgba(15, 118, 110, 0.08), transparent 50%),
+    linear-gradient(180deg, #f7f9f7 0%, #eef3f0 45%, #f4f7f5 100%);
+  color: var(--color-ink);
+  font-family: var(--font-body), ui-sans-serif, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Scroll lives here so the document itself never rubber-bands past the footer */
+.app-scroll {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 25%, white);
+}
+
+.font-display,
+.font-serif,
+.font-heading {
+  font-family:
+    Futura,
+    "Futura PT",
+    var(--font-heading),
+    "Century Gothic",
+    "Trebuchet MS",
+    sans-serif;
+}
+
+.font-hand {
+  font-family: var(--font-hand), "Segoe Script", "Apple Chancery", cursive;
+}
+
+.font-quote {
+  font-family: var(--font-quote), "Palatino Linotype", Palatino, Georgia, serif;
+}
+
+@keyframes eye-blink {
+  0%,
+  18%,
+  100% {
+    transform: scaleY(1);
+  }
+  22%,
+  28% {
+    transform: scaleY(0.08);
+  }
+  32%,
+  68% {
+    transform: scaleY(1);
+  }
+  72%,
+  78% {
+    transform: scaleY(0.08);
+  }
+  82% {
+    transform: scaleY(1);
+  }
+}
+
+.footer-eye-blink {
+  display: inline-block;
+  transform-origin: 50% 55%;
+  animation: eye-blink 4.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-eye-blink {
+    animation: none;
+  }
+}

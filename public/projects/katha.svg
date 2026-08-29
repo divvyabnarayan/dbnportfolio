@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <rect width="1200" height="800" fill="#F5E6D3"/>
+  <rect x="120" y="120" width="960" height="560" rx="28" fill="#C2410C" opacity=".85"/>
+  <rect x="200" y="220" width="340" height="360" rx="18" fill="#FED7AA"/>
+  <rect x="620" y="220" width="380" height="160" rx="18" fill="#FFEDD5"/>
+  <rect x="620" y="420" width="380" height="160" rx="18" fill="#FFEDD5"/>
+  <text x="60" y="80" fill="#7C2D12" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Katha · placeholder</text>
+</svg>

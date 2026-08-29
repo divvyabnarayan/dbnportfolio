@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <rect width="1200" height="800" fill="#FEF9C3"/>
+  <circle cx="360" cy="400" r="160" fill="#FACC15"/>
+  <circle cx="700" cy="340" r="120" fill="#F97316" opacity=".8"/>
+  <rect x="820" y="420" width="220" height="180" rx="28" fill="#84CC16"/>
+  <text x="60" y="90" fill="#713F12" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Toy Resale · placeholder</text>
+</svg>
