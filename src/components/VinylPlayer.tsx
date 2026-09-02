@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { withBasePath } from "@/lib/basePath";
 
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
@@ -94,7 +95,7 @@ export function VinylPlayer() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[1.35rem] bg-[#121212] px-3.5 py-3.5 text-white shadow-[0_8px_30px_-12px_rgba(18,24,22,0.28)] sm:rounded-[1.5rem] sm:px-4 sm:py-4">
-      <audio ref={audioRef} src="/audio/daylight.mp3" preload="auto" />
+      <audio ref={audioRef} src={withBasePath("/audio/daylight.mp3")} preload="auto" />
 
       <div className="flex items-center justify-between text-white/70">
         <span className="text-[0.65rem] font-semibold tracking-[0.12em] text-[#1DB954] uppercase">

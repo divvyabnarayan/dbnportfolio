@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { hero, site } from "@/content/site";
+import { withBasePath } from "@/lib/basePath";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -45,7 +46,7 @@ export function Hero() {
         {hero.ctas.map((cta) => (
           <a
             key={cta.label}
-            href={cta.href}
+            href={withBasePath(cta.href)}
             className="group inline-flex items-center gap-2 rounded-full border border-line bg-paper/80 px-4 py-2.5 text-sm font-medium text-ink shadow-[0_1px_0_rgba(18,24,22,0.04)] backdrop-blur transition hover:-translate-y-0.5 hover:border-accent/40 hover:bg-white"
           >
             <span aria-hidden className="text-base transition group-hover:scale-110">

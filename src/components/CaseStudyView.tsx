@@ -6,6 +6,7 @@ import { getAdjacentCaseStudies } from "@/content/case-studies";
 import { SiteNav } from "@/components/SiteNav";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { withBasePath } from "@/lib/basePath";
 import { ImageSlideshow } from "@/components/ImageSlideshow";
 import { IphoneMockupSlideshow } from "@/components/IphoneMockupSlideshow";
 import { LaptopMockupSlideshow } from "@/components/LaptopMockupSlideshow";
@@ -1730,7 +1731,7 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
                 {study.researchPaper.body}
               </p>
               <a
-                href={study.researchPaper.href}
+                href={withBasePath(study.researchPaper.href)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-paper transition hover:-translate-y-0.5 hover:bg-ink/90"
@@ -1756,9 +1757,13 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
                   controls
                   playsInline
                   preload="metadata"
-                  poster={study.prototype.poster}
+                  poster={
+                    study.prototype.poster
+                      ? withBasePath(study.prototype.poster)
+                      : undefined
+                  }
                 >
-                  <source src={study.prototype.video} type="video/mp4" />
+                  <source src={withBasePath(study.prototype.video)} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>

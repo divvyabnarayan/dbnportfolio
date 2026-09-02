@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { withBasePath } from "@/lib/basePath";
 
 type ViewCaseStudyCursorProps = {
   children: ReactNode;
@@ -71,7 +72,7 @@ export function ViewCaseStudyCursor({
   return (
     <>
       <a
-        href={href}
+        href={withBasePath(href)}
         className={className}
         onMouseEnter={onEnter}
         onMouseMove={onMove}

@@ -1,4 +1,5 @@
 import { site } from "@/content/site";
+import { withBasePath } from "@/lib/basePath";
 
 type BrandLogoProps = {
   className?: string;
@@ -14,11 +15,11 @@ export function BrandLogo({ className = "", title = site.fullName }: BrandLogoPr
       title={title}
       className={`inline-block shrink-0 bg-current ${className}`}
       style={{
-        WebkitMaskImage: "url(/brand/logo-mask.png)",
+        WebkitMaskImage: `url(${withBasePath("/brand/logo-mask.png")})`,
         WebkitMaskSize: "contain",
         WebkitMaskRepeat: "no-repeat",
         WebkitMaskPosition: "center",
-        maskImage: "url(/brand/logo-mask.png)",
+        maskImage: `url(${withBasePath("/brand/logo-mask.png")})`,
         maskSize: "contain",
         maskRepeat: "no-repeat",
         maskPosition: "center",

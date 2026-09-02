@@ -2,6 +2,7 @@ import Image from "next/image";
 import { caseStudies, otherProjects } from "@/content/site";
 import { Reveal } from "@/components/Reveal";
 import { ViewCaseStudyCursor } from "@/components/ViewCaseStudyCursor";
+import { withBasePath } from "@/lib/basePath";
 
 export function CaseStudies() {
   return (
@@ -51,6 +52,19 @@ export function CaseStudies() {
                   <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink-soft sm:text-lg">
                     {project.description}
                   </p>
+                  <ul
+                    className="mt-4 flex flex-wrap gap-2"
+                    aria-label={`${project.title} tags`}
+                  >
+                    {project.tags.map((tag) => (
+                      <li
+                        key={tag}
+                        className="rounded-full border border-line bg-paper/80 px-3 py-1 text-xs font-medium text-muted"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </ViewCaseStudyCursor>
             </article>
@@ -69,7 +83,7 @@ export function CaseStudies() {
             return (
             <li key={project.title}>
               <a
-                href={project.href}
+                href={withBasePath(project.href)}
                 {...(isExternal
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}

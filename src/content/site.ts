@@ -1,14 +1,14 @@
 export const site = {
   name: "Divvya",
   fullName: "Divvya B. Narayan",
-  role: "UX Designer",
+  role: "Digital Designer",
   email: "divvyabnarayan@gmail.com",
   location: "Available worldwide",
 } as const;
 
 export const hero = {
   greeting: "Hello! I'm Divvya.",
-  tagline: "UX design at heart. Crafting clarity for products people love.",
+  tagline: "Designer by training, strategist by instinct. I design experiences and the thinking behind them.",
   ctas: [
     { label: "Hello!", emoji: "👋", href: "/about" },
     { label: "Resume", emoji: "📃", href: "/divya-resume.pdf" },
@@ -32,7 +32,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Calma",
     description:
       "A portable mindfulness companion for everyday academic stress.",
-    tags: ["product design", "research", "physical"],
+    tags: ["UX Design", "Product Design", "AI Prototyping"],
     slug: "calma",
     href: "/work/calma",
     image: "/projects/calma/work-card.jpg",
@@ -42,7 +42,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Design System",
     description:
       "A scalable Figma design system for an Australian Telecom Provider with reusable components, design tokens, and accessibility standards to improve consistency and streamline design to development collaboration.",
-    tags: ["design system", "UI kit", "Figma"],
+    tags: ["UI Design", "Design Systems", "Figma", "analytics"],
     slug: "flip-design-system",
     href: "/work/flip-design-system",
     image: "/projects/flip/work-card.png?v=3",
@@ -52,7 +52,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Little Sprout",
     description:
       "A pregnancy tracker that centralizes health data, symptom and medicine tracking, appointments, wellness support, and communication with doctors and caregivers.",
-    tags: ["product design", "research", "healthcare"],
+    tags: ["UI/UX", "prototyping"],
     slug: "little-sprout",
     href: "/work/little-sprout",
     image: "/projects/little-sprout/solution-slide-18.jpg",
@@ -62,7 +62,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Amigo",
     description:
       "A gamified task management app helping kids aged 5–13 track academic work, earn rewards, and build confidence — with parent visibility built in.",
-    tags: ["product design", "research", "mobile"],
+    tags: ["UI Design", "Visual Design", "Figma"],
     slug: "amigo",
     href: "/work/amigo",
     image: "/projects/amigo/work-card-logo.png",
@@ -157,6 +157,8 @@ export const toolboxTools: ToolboxTool[] = [
   { name: "Illustrator", image: "/tools/illustrator.png", rotate: -7, delay: 0.47 },
   { name: "Webflow", image: "/tools/webflow.png", rotate: 8, delay: 0.54 },
   { name: "ChatGPT", image: "/tools/chatgpt.png", rotate: -4, delay: 0.61 },
+  { name: "Google Analytics", image: "/tools/google-analytics.png", rotate: 6, delay: 0.68 },
+  { name: "HubSpot", image: "/tools/hubspot.png", rotate: -5, delay: 0.75 },
 ];
 
 export type ProcessStep = {
@@ -180,7 +182,7 @@ export const processSteps: ProcessStep[] = [
     number: "02",
     title: "Define Goals and Set a Clear Direction",
     bullets: [
-      "I turn research insights into a clear roadmap by prioritising goals, user needs, and product requirements.",
+      "I turn research insights into a clear roadmap by prioritising goals, user needs, product requirements, and market/channel opportunities.",
     ],
   },
   {
@@ -220,13 +222,13 @@ export const processSteps: ProcessStep[] = [
     number: "07",
     title: "Launch, Learn, and Keep Improving",
     bullets: [
-      "I measure product performance, gather user insights, and continuously refine the experience after launch.",
+      "I measure product performance, gather user insights, and continuously refine the experience after launch alongside broader marketing and business metrics.",
     ],
   },
 ];
 
 export const footer = {
-  eyebrow: "Designing at the edge of AI",
+  eyebrow: "Designing at the intersection of UI, UX, product, strategy, and AI",
   headline: "You made it this far 👀",
   subline: "Might as well say hi! Let's build something cool.",
   socials: [
@@ -239,7 +241,9 @@ export const footer = {
 export const about = {
   intro: [
     "You can call me Di or DBN, that's what I am popularly known as!",
-    "My journey as a designer began with curiosity, a fascination with how people interact with technology and why some experiences feel intuitive while others create friction. That curiosity led me to study UX Design, where I learned to combine research, empathy, accessibility, and design thinking to create meaningful user experiences. As I worked across startups, enterprise teams, and client projects, I gained experience designing digital products, building design systems, and collaborating with cross-functional teams, each challenge shaping the way I approach problem solving. Today, I enjoy bringing ideas to life by blending UX research, interaction design, front end development, and AI assisted workflows to create intuitive, engaging, and scalable products. I see design as an ongoing journey of learning, experimenting, and evolving one where every project is an opportunity to make technology more thoughtful, accessible, and impactful for the people who use it.",
+    "My journey as a designer began with curiosity, a fascination with how people interact with technology and why some experiences feel intuitive while others create friction. That curiosity led me to study UX Design, where I learned to combine research, empathy, accessibility, and design thinking to create meaningful user experiences. As I worked across startups, enterprise teams, and client projects, I gained experience designing digital products, building design systems, and collaborating with cross-functional teams, each challenge shaping the way I approach problem solving.",
+    "Alongside product design, I have also worked on the business and marketing side of things, building HubSpot email campaigns, designing pitch decks, and coordinating workshops and hackathons at Accenture. That side of my work taught me that a great experience isn't just about the interface it's about the strategy behind it: understanding an audience, choosing the right channel, and shaping a message that actually lands. Today, I enjoy bringing ideas to life by blending UX research, interaction design, digital strategy, front end development, and AI assisted workflows to create intuitive, engaging, and scalable products and the campaigns and channels that bring them to people.",
+    "I see design as an ongoing journey of learning, experimenting, and evolving one where every project, whether it's a product, a campaign, or a system connecting the two, is an opportunity to make technology more thoughtful, accessible, and impactful for the people who use it.",
   ],
   about:
     "I bring empathy, structure, and craft to every project. From user research and journey mapping to high-fidelity prototypes, I focus on designs that feel thoughtful, inclusive, and easy to use. I thrive in collaborative environments where design, product, and engineering work closely together.",
