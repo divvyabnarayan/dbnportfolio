@@ -17,6 +17,10 @@ export function withBasePath(href: string) {
       ? href
       : `${basePath}${href.startsWith("/") ? href : `/${href}`}`;
 
+  if (!basePath) {
+    return prefixed;
+  }
+
   const [path, hash] = prefixed.split("#", 2);
   const isFile = /\.[a-zA-Z0-9]+$/.test(path);
   const withSlash = !isFile && !path.endsWith("/") ? `${path}/` : path;
