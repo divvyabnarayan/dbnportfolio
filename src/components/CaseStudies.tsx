@@ -23,12 +23,12 @@ export function CaseStudies() {
       <div className="mt-10 space-y-16 sm:mt-14 sm:space-y-24">
         {caseStudies.map((project, index) => (
           <Reveal key={project.title} delay={index * 0.04}>
-            <article className="group border-t border-line pt-8">
+            <article className="group w-full border-t border-line pt-8">
               <ViewCaseStudyCursor
                 href={project.href}
-                className="block outline-none [@media(hover:hover)_and_(pointer:fine)]:cursor-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
+                className="block w-full outline-none [@media(hover:hover)_and_(pointer:fine)]:cursor-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
               >
-                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_18px_50px_-28px_rgba(18,24,22,0.45)]">
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_18px_50px_-28px_rgba(18,24,22,0.45)]">
                   <Image
                     src={project.image}
                     alt={project.imageAlt}
@@ -40,7 +40,7 @@ export function CaseStudies() {
                   />
                 </div>
 
-                <div className="mt-6 sm:mt-8">
+                <div className="mt-6 w-full min-w-0 sm:mt-8">
                   <div className="flex flex-wrap items-end justify-between gap-3">
                     <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-ink transition group-hover:text-accent sm:text-4xl">
                       {project.title}
@@ -49,7 +49,7 @@ export function CaseStudies() {
                       View Case Study →
                     </span>
                   </div>
-                  <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink-soft sm:text-lg">
+                  <p className="mt-4 w-full max-w-full text-pretty break-words text-base leading-relaxed text-ink-soft sm:text-lg">
                     {project.description}
                   </p>
                   <ul

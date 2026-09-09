@@ -5,7 +5,6 @@ import { SiteNav } from "@/components/SiteNav";
 import { VinylPlayer } from "@/components/VinylPlayer";
 import { AboutPhotoCarousel } from "@/components/AboutPhotoCarousel";
 import { AboutQuoteCard } from "@/components/AboutQuoteCard";
-import { AboutJourneyCard } from "@/components/AboutJourneyCard";
 import { AboutPluckCards } from "@/components/AboutPluckCards";
 
 function BentoCard({
@@ -61,22 +60,17 @@ export function AboutView() {
               [ About (tall) ] [ Music ] [ Socials / CTA / Photos ]
             */}
             <div className="grid h-full min-h-0 grid-cols-2 grid-rows-3 gap-3 sm:gap-4">
-              <div className="row-span-3 grid min-h-0 grid-rows-[minmax(0,1.35fr)_minmax(0,0.65fr)] gap-3 sm:gap-4">
-                <div className="min-h-0">
-                  <BentoCard>
-                    <h1 className="font-display shrink-0 text-[clamp(1.25rem,2.2vh,1.85rem)] font-semibold leading-tight tracking-[-0.03em] text-ink">
-                      Hi, I&apos;m {site.name} 👋
-                    </h1>
-                    <div className="mt-2 min-h-0 flex-1 space-y-2.5 overflow-y-auto pr-1 text-[clamp(0.78125rem,1.75vh,0.96875rem)] leading-relaxed text-ink-soft">
-                      {about.intro.map((paragraph) => (
-                        <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-                      ))}
-                    </div>
-                  </BentoCard>
-                </div>
-                <div className="min-h-0">
-                  <AboutJourneyCard />
-                </div>
+              <div className="row-span-3 min-h-0">
+                <BentoCard>
+                  <h1 className="font-display shrink-0 text-[clamp(1.25rem,2.2vh,1.85rem)] font-semibold leading-tight tracking-[-0.03em] text-ink">
+                    Hi, I&apos;m {site.name} 👋
+                  </h1>
+                  <div className="mt-2 min-h-0 flex-1 space-y-2.5 overflow-y-auto pr-1 text-[clamp(0.78125rem,1.75vh,0.96875rem)] leading-relaxed text-ink-soft">
+                    {about.intro.map((paragraph) => (
+                      <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                    ))}
+                  </div>
+                </BentoCard>
               </div>
 
               <div className="row-span-2 grid min-h-0 grid-cols-2 gap-3 sm:gap-4">
