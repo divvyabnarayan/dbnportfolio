@@ -106,6 +106,21 @@ export const otherProjects: OtherProject[] = [
   },
 ];
 
+export const heroProjects = [
+  ...caseStudies.map(({ title, href, image, imageAlt }) => ({
+    title,
+    href,
+    image,
+    imageAlt,
+  })),
+  ...otherProjects.map(({ title, href, image, imageAlt }) => ({
+    title,
+    href,
+    image,
+    imageAlt,
+  })),
+];
+
 export type Skill = {
   name: string;
   detail: string;
