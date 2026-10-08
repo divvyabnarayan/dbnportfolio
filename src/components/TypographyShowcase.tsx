@@ -1,9 +1,15 @@
 "use client";
 
-import { Poppins } from "next/font/google";
+import { Plus_Jakarta_Sans, Poppins } from "next/font/google";
 import type { TypographySection } from "@/content/case-studies";
 
 const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -13,6 +19,26 @@ type TypographyShowcaseProps = {
   typography: TypographySection;
 };
 
+function hexToRgba(hex: string, alpha: number) {
+  const value = hex.replace("#", "");
+  const full =
+    value.length === 3
+      ? value
+          .split("")
+          .map((char) => char + char)
+          .join("")
+      : value;
+  const r = Number.parseInt(full.slice(0, 2), 16);
+  const g = Number.parseInt(full.slice(2, 4), 16);
+  const b = Number.parseInt(full.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function showcaseFont(fontFamily: string) {
+  if (fontFamily.toLowerCase().includes("jakarta")) return plusJakarta.className;
+  return poppins.className;
+}
+
 function responsiveFontSize(size: string) {
   const px = Number.parseFloat(size);
   if (px <= 22) return size;
@@ -20,20 +46,29 @@ function responsiveFontSize(size: string) {
 }
 
 export function TypographyShowcase({ typography }: TypographyShowcaseProps) {
+  const accent = typography.accentColor ?? "#D70A0A";
+  const weightCols =
+    typography.weights.length <= 2
+      ? "grid-cols-2"
+      : "grid-cols-2 sm:grid-cols-4";
+
   return (
-    <div className={`${poppins.className} space-y-6`}>
+    <div className={`${showcaseFont(typography.fontFamily)} space-y-6`}>
       <div className="relative overflow-hidden rounded-[1.75rem] border border-black/10 bg-[#131313] p-6 text-white shadow-[0_24px_60px_-32px_rgba(0,0,0,0.45)] sm:p-8 lg:p-10">
         <div
           aria-hidden
-          className="pointer-events-none absolute -top-20 -right-6 h-72 w-72 rounded-full bg-[#D70A0A]/45 blur-3xl sm:h-80 sm:w-80"
+          className="pointer-events-none absolute -top-20 -right-6 h-72 w-72 rounded-full blur-3xl sm:h-80 sm:w-80"
+          style={{ backgroundColor: hexToRgba(accent, 0.45) }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute top-1/3 -right-16 h-64 w-64 rounded-full bg-[#B40000]/35 blur-3xl"
+          className="pointer-events-none absolute top-1/3 -right-16 h-64 w-64 rounded-full blur-3xl"
+          style={{ backgroundColor: hexToRgba(accent, 0.32) }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-[#B40000]/20 blur-3xl"
+          className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full blur-3xl"
+          style={{ backgroundColor: hexToRgba(accent, 0.18) }}
         />
 
         <div className="relative">
@@ -50,7 +85,7 @@ export function TypographyShowcase({ typography }: TypographyShowcaseProps) {
 
         <div className="relative mt-8 border-t border-white/10 pt-8">
           <p className="text-sm font-semibold text-white">Font family</p>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className={`mt-4 grid gap-3 ${weightCols}`}>
             {typography.weights.map((item) => (
               <div
                 key={item.weight}
@@ -71,6 +106,7 @@ export function TypographyShowcase({ typography }: TypographyShowcaseProps) {
         </div>
       </div>
 
+      {typography.groups?.length ? (
       <div className="overflow-hidden rounded-[1.75rem] border border-black/10 bg-white shadow-[0_12px_40px_-32px_rgba(15,23,42,0.28)]">
         <div className="border-b border-black/5 px-5 py-5 sm:px-8 sm:py-6">
           <p className="text-lg font-semibold text-ink sm:text-xl">Font size</p>
@@ -113,6 +149,7 @@ export function TypographyShowcase({ typography }: TypographyShowcaseProps) {
           ))}
         </div>
       </div>
+      ) : null}
     </div>
   );
 }

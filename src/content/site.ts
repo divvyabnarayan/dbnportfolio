@@ -68,6 +68,16 @@ export const caseStudies: CaseStudy[] = [
     image: "/projects/amigo/work-card-logo.png",
     imageAlt: "Amigo logo on a dark background",
   },
+  {
+    title: "Talhive Branding",
+    description:
+      "A logo and visual identity for a human capital firm that finds talent who fit both the role and the culture.",
+    tags: ["Brand Design", "Logo Design", "Visual Identity"],
+    slug: "talhive",
+    href: "/work/talhive",
+    image: "/projects/talhive/cover.png",
+    imageAlt: "Talhive logo design cover",
+  },
 ];
 
 export type OtherProject = {
@@ -95,14 +105,6 @@ export const otherProjects: OtherProject[] = [
     href: "https://www.behance.net/gallery/174255055/Zest-A-Chocolate-App-Design",
     image: "/projects/zest/cover.png",
     imageAlt: "Zest chocolate app design cover",
-  },
-  {
-    title: "Talhive: Logo Design",
-    context: "Brand Design",
-    tags: ["logo design", "brand design"],
-    href: "https://www.behance.net/gallery/120250665/Talhive-Logo-Design",
-    image: "/projects/talhive/cover.png",
-    imageAlt: "Talhive logo design cover",
   },
 ];
 
