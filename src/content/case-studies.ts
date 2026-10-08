@@ -43,8 +43,9 @@ export type TypographySection = {
   body?: string | string[];
   fontFamily: string;
   fontDescription: string;
+  accentColor?: string;
   weights: { label: string; weight: number }[];
-  groups: {
+  groups?: {
     title: string;
     items: {
       token: string;
@@ -134,6 +135,33 @@ export type CaseStudyDetail = {
   intro: string;
   meta: CaseStudyMeta[];
   confidentialityNote?: string;
+  /** Brand / visual identity layout (Tropina-style: copy, split, palette, stacked frames). */
+  visualStory?: {
+    copy?: string[];
+    leadImage?: { src: string; alt: string };
+    split?: {
+      heading: string;
+      body: string | string[];
+      image: { src: string; alt: string };
+    };
+    palettes?: {
+      hex: string;
+      name?: string;
+      wordmark?: string;
+    }[];
+    frames: {
+      src: string;
+      alt: string;
+      caption?: string;
+      cards?: { title: string; body: string }[];
+      pair?: { src: string; alt: string };
+      grid?: { src: string; alt: string }[];
+    }[];
+    closing?: {
+      heading: string;
+      body: string[];
+    };
+  };
   /** Essay-style layout (e.g. design system case studies). */
   narrative?: {
     lede?: string;
@@ -1836,8 +1864,125 @@ export const caseStudyDetails: CaseStudyDetail[] = [
     },
   },
 
-
-
+  {
+    slug: "talhive",
+    title: "Talhive Branding",
+    buildingTitle: "Talhive Branding",
+    subtitle:
+      "A logo and visual identity for a human capital firm that finds talent who fit both the role and the culture.",
+    heroImage: "/projects/talhive/slide-01.jpg",
+    heroImageAlt:
+      "Talhive wordmark and hive mark over a professional portrait",
+    heroBackground: "#12141A",
+    headingColor: "#2a37f5",
+    cardStrokeColor: "color-mix(in srgb, #2a37f5 32%, white)",
+    intro:
+      "Talhive is a Human Capital Management firm that helps companies attract, hire, develop, and retain top talent.",
+    meta: [
+      { label: "My Role", value: "Brand Identity, Logo Design" },
+      { label: "Duration", value: "3 months" },
+      {
+        label: "Tools",
+        value: "Illustrator, Photoshop",
+        tools: [
+          { name: "Illustrator", icon: "/tools/illustrator.png" },
+          { name: "Photoshop", icon: "/tools/photoshop.png" },
+        ],
+      },
+      { label: "Client", value: "Talhive HR Management LLP" },
+    ],
+    visualStory: {
+      copy: [
+        "They work with high growth technology companies to build teams across revenue, executive, and technology functions. By connecting businesses with the right people and building cohesive, high performing teams, Talhive helps companies scale and accelerate growth.",
+      ],
+      split: {
+        heading: "Concept",
+        body: [
+          "The Talhive logo combines two ideas at the heart of the business: search and community.",
+          "The outer form is inspired by a hive, representing people, connection and a collective working environment. Within it, I integrated an inverted search symbol using negative space representing the process of finding the right talent.",
+          "Together, the two forms communicate Talhive's approach to recruitment: searching for people whose skills and personality fit the organisation.",
+        ],
+        image: {
+          src: "/projects/talhive/slide-03.jpg",
+          alt: "Talhive hive mark on a rounded blue square",
+        },
+      },
+      palettes: [
+        { hex: "#000000", name: "Ink", wordmark: "Talhive" },
+        { hex: "#2A37F5", name: "Hive Blue", wordmark: "Talhive" },
+      ],
+      frames: [
+        {
+          src: "/projects/talhive/slide-04.jpg",
+          alt: "Talhive logo construction grid",
+          caption:
+            "I explored different ways of combining the two core ideas without making the symbol feel like two separate icons placed together. The final direction uses the search form as negative space within the hive structure, creating a single, recognisable mark.",
+          cards: [
+            { title: "Hive", body: "People · community · culture" },
+            { title: "Search", body: "Discovery · talent · opportunity" },
+            { title: "Together", body: "Finding the right fit" },
+          ],
+        },
+        {
+          src: "/projects/talhive/slide-06.jpg",
+          alt: "Talhive logo lockups in color, mono, and color variations",
+          grid: [
+            {
+              src: "/projects/talhive/slide-06.jpg",
+              alt: "Final Talhive logo and wordmark",
+            },
+            {
+              src: "/projects/talhive/slide-08-right.jpg",
+              alt: "Talhive logo on a dark navy field",
+            },
+            {
+              src: "/projects/talhive/slide-08-left.jpg",
+              alt: "Talhive logo on a muted blue field",
+            },
+            {
+              src: "/projects/talhive/slide-07.jpg",
+              alt: "Monochrome Talhive logo and wordmark",
+            },
+          ],
+        },
+        {
+          src: "/projects/talhive/slide-14.jpg",
+          alt: "Talhive stationery with letterhead, cards, pens, and tape",
+        },
+        {
+          src: "/projects/talhive/slide-13.jpg",
+          alt: "Talhive pin badge, front and back",
+          pair: {
+            src: "/projects/talhive/slide-15.jpg",
+            alt: "Talhive wordmark printed on paper",
+          },
+        },
+        {
+          src: "/projects/talhive/slide-16.jpg",
+          alt: "Talhive wordmark on a hanging t-shirt",
+        },
+      ],
+      closing: {
+        heading: "Design Decisions",
+        body: [
+          "The biggest challenge was keeping the mark recognisable without making either concept too literal.",
+          "The early explorations relied heavily on recognisable search and honeycomb shapes. The final direction became stronger when the two ideas were treated as one visual system rather than two separate symbols.",
+          "This helped the logo move away from a generic recruitment aesthetic and towards a more distinctive brand mark.",
+        ],
+      },
+    },
+    typography: {
+      heading: "Typography",
+      fontFamily: "Plus Jakarta Sans",
+      fontDescription:
+        "Plus Jakarta Sans is the Talhive typeface — Bold for the wordmark and headlines, Regular for supporting copy.",
+      accentColor: "#2A37F5",
+      weights: [
+        { label: "Bold", weight: 700 },
+        { label: "Regular", weight: 400 },
+      ],
+    },
+  },
 ];
 
 export function getCaseStudy(slug: string) {
@@ -1850,6 +1995,7 @@ export const caseStudyOrder = [
   "flip-design-system",
   "little-sprout",
   "amigo",
+  "talhive",
 ] as const;
 
 function getOrderedCaseStudies() {

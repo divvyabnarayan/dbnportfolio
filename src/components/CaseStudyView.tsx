@@ -220,6 +220,346 @@ function SystemLoopDiagram({
   );
 }
 
+function hexIsLight(hex: string) {
+  const value = hex.replace("#", "");
+  const r = Number.parseInt(value.slice(0, 2), 16);
+  const g = Number.parseInt(value.slice(2, 4), 16);
+  const b = Number.parseInt(value.slice(4, 6), 16);
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.62;
+}
+
+function VisualFrame({
+  src,
+  alt,
+  matchHeight,
+}: {
+  src: string;
+  alt: string;
+  matchHeight?: boolean;
+}) {
+  if (matchHeight) {
+    return (
+      <div className="relative aspect-[16/10] overflow-hidden bg-surface">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          unoptimized
+          sizes="(max-width: 1152px) 100vw, 560px"
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="overflow-hidden bg-surface">
+      <Image
+        src={src}
+        alt={alt}
+        width={1400}
+        height={788}
+        unoptimized
+        sizes="(max-width: 1152px) 100vw, 1152px"
+        className="h-auto w-full"
+      />
+    </div>
+  );
+}
+
+function VisualBrandLayout({ study }: { study: CaseStudyDetail }) {
+  const story = study.visualStory;
+  if (!story) return null;
+
+  const firstPalettes = story.palettes?.slice(0, 2) ?? [];
+  const restPalettes = story.palettes?.slice(2) ?? [];
+
+  return (
+    <div className="mx-auto w-full max-w-6xl px-6 pt-14 sm:px-8 sm:pt-20">
+      <Reveal>
+        <p className="case-section-label text-sm font-medium tracking-[0.14em] text-muted uppercase">
+          Branding
+        </p>
+        <h1 className="font-serif mt-4 text-[clamp(2.1rem,6vw,3.65rem)] leading-[1.05] font-semibold tracking-[-0.03em] text-ink">
+          {study.buildingTitle}
+        </h1>
+        <p className="mt-4 text-base text-muted sm:text-lg">{study.subtitle}</p>
+      </Reveal>
+
+      <Reveal className="mt-10 sm:mt-12" delay={0.06}>
+        <div
+          className="relative overflow-hidden rounded-[1.5rem]"
+          style={{ backgroundColor: study.heroBackground }}
+        >
+          <div className="relative aspect-[16/9] w-full">
+            <Image
+              src={study.heroImage}
+              alt={study.heroImageAlt}
+              fill
+              unoptimized
+              priority
+              sizes="(max-width: 1152px) 100vw, 1152px"
+              className="object-cover object-top"
+            />
+          </div>
+        </div>
+      </Reveal>
+
+      <section className="mt-12 grid gap-10 sm:mt-14 sm:grid-cols-[1.2fr_0.8fr] sm:gap-14">
+        <Reveal>
+          <p className="font-serif text-[calc(1.35rem+6pt)] leading-snug font-semibold tracking-[-0.02em] text-ink sm:text-[calc(1.6rem+6pt)]">
+            {study.intro}
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.05}>
+          <dl className="divide-y divide-line border-y border-line">
+            {study.meta.map((item) => (
+              <div
+                key={item.label}
+                className="grid gap-1 py-4 sm:grid-cols-[7.5rem_1fr] sm:items-center sm:gap-4"
+              >
+                <dt className="text-xs font-semibold tracking-[0.14em] text-muted uppercase">
+                  {item.label}
+                </dt>
+                <dd className="text-sm leading-relaxed text-ink-soft sm:text-[0.95rem]">
+                  {item.tools?.length ? (
+                    <ul
+                      className="flex flex-wrap items-center gap-3"
+                      aria-label={item.tools.map((tool) => tool.name).join(", ")}
+                    >
+                      {item.tools.map((tool) => (
+                        <li
+                          key={tool.name}
+                          className="relative aspect-square h-9 w-9 shrink-0 overflow-hidden rounded-lg border border-line bg-white shadow-sm"
+                        >
+                          <Image
+                            src={tool.icon}
+                            alt={tool.name}
+                            fill
+                            unoptimized
+                            sizes="36px"
+                            className="object-cover"
+                            title={tool.name}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    item.value
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+      </section>
+
+      {story.copy?.length ? (
+        <Reveal className="mt-12 sm:mt-14">
+          <div className="space-y-5">
+            {story.copy.map((paragraph) => (
+              <p
+                key={paragraph}
+                className="text-[0.98rem] leading-[1.7] text-ink-soft sm:text-[1.05rem]"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </Reveal>
+      ) : null}
+
+      <div className="mt-12 flex flex-col gap-8 sm:mt-14">
+        {story.leadImage ? (
+          <Reveal>
+            <VisualFrame src={story.leadImage.src} alt={story.leadImage.alt} />
+          </Reveal>
+        ) : null}
+
+        {story.split ? (
+          <Reveal>
+            <div className="grid min-h-[22rem] sm:min-h-[28rem] sm:grid-cols-2">
+              <div className="flex flex-col justify-center bg-white px-8 py-10 sm:px-12 sm:py-14">
+                <div className="space-y-4">
+                  {(Array.isArray(story.split.body)
+                    ? story.split.body
+                    : [story.split.body]
+                  ).map((paragraph) => (
+                    <p
+                      key={paragraph}
+                      className="text-[0.98rem] leading-[1.7] text-ink-soft sm:text-[1.05rem]"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              <div className="relative min-h-[18rem] bg-white sm:min-h-full">
+                <Image
+                  src={story.split.image.src}
+                  alt={story.split.image.alt}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1152px) 100vw, 560px"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </Reveal>
+        ) : null}
+
+        {story.palettes?.length ? (
+          <Reveal>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {firstPalettes.map((palette) => {
+                const light = hexIsLight(palette.hex);
+                const ink = light ? "#121816" : "#ffffff";
+                return (
+                  <div
+                    key={palette.hex}
+                    className="flex min-h-[14rem] flex-col justify-between px-8 py-8 sm:min-h-[18rem] sm:px-10"
+                    style={{ backgroundColor: palette.hex }}
+                  >
+                    <div className="flex flex-1 items-center justify-center">
+                      <p
+                        className="font-serif text-3xl font-semibold tracking-[-0.03em] sm:text-4xl"
+                        style={{ color: ink }}
+                      >
+                        {palette.wordmark ?? palette.name ?? palette.hex}
+                      </p>
+                    </div>
+                    <p
+                      className="text-xs font-medium tracking-[0.06em]"
+                      style={{ color: light ? "#121816" : "rgba(255,255,255,0.86)" }}
+                    >
+                      HEX: {palette.hex}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+            {restPalettes.length ? (
+              <div
+                className="mt-2 grid gap-2"
+                style={{
+                  gridTemplateColumns: `repeat(${restPalettes.length}, minmax(0, 1fr))`,
+                }}
+              >
+                {restPalettes.map((palette) => {
+                  const light = hexIsLight(palette.hex);
+                  const ink = light ? "#121816" : "#ffffff";
+                  return (
+                    <div
+                      key={palette.hex}
+                      className="flex min-h-[11rem] flex-col justify-between px-6 py-6 sm:min-h-[14rem] sm:px-8"
+                      style={{ backgroundColor: palette.hex }}
+                    >
+                      <div className="flex flex-1 items-center justify-center">
+                        <p
+                          className="font-serif text-2xl font-semibold tracking-[-0.03em]"
+                          style={{ color: ink }}
+                        >
+                          {palette.wordmark ?? palette.name ?? palette.hex}
+                        </p>
+                      </div>
+                      <p
+                        className="text-xs font-medium tracking-[0.06em]"
+                        style={{ color: light ? "#121816" : "rgba(255,255,255,0.86)" }}
+                      >
+                        HEX: {palette.hex}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : null}
+          </Reveal>
+        ) : null}
+
+        {study.typography ? (
+          <Reveal>
+            <TypographyShowcase typography={study.typography} />
+          </Reveal>
+        ) : null}
+
+        {story.frames.map((frame) =>
+          frame.grid?.length ? (
+            <Reveal key={frame.src}>
+              <div className="grid grid-cols-2 gap-0">
+                {frame.grid.map((image) => (
+                  <VisualFrame
+                    key={image.src}
+                    src={image.src}
+                    alt={image.alt}
+                    matchHeight
+                  />
+                ))}
+              </div>
+            </Reveal>
+          ) : frame.pair ? (
+            <div key={frame.src} className="grid gap-2 sm:grid-cols-2">
+              <Reveal>
+                <VisualFrame src={frame.src} alt={frame.alt} matchHeight />
+              </Reveal>
+              <Reveal delay={0.04}>
+                <VisualFrame src={frame.pair.src} alt={frame.pair.alt} matchHeight />
+              </Reveal>
+            </div>
+          ) : (
+            <Reveal key={frame.src}>
+              <VisualFrame src={frame.src} alt={frame.alt} />
+              {frame.caption ? (
+                <p className="mt-6 text-[0.98rem] leading-[1.7] text-ink-soft sm:mt-8 sm:text-[1.05rem]">
+                  {frame.caption}
+                </p>
+              ) : null}
+              {frame.cards?.length ? (
+                <div className="mt-8 grid gap-2 sm:grid-cols-3">
+                  {frame.cards.map((card) => (
+                    <div
+                      key={card.title}
+                      className="flex flex-col border border-line bg-white px-6 py-6 sm:px-8 sm:py-7"
+                    >
+                      <p
+                        className="font-serif text-2xl font-bold tracking-[-0.03em] sm:text-3xl"
+                        style={{ color: study.headingColor ?? "#2A37F5" }}
+                      >
+                        {card.title}
+                      </p>
+                      <p className="mt-3 text-[0.98rem] leading-[1.7] text-ink sm:text-[1.05rem]">
+                        {card.body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </Reveal>
+          ),
+        )}
+      </div>
+
+      {story.closing ? (
+        <Reveal className="mt-16 sm:mt-20">
+          <h2 className="case-section-label text-sm font-medium tracking-[0.14em] text-muted uppercase">
+            {story.closing.heading}
+          </h2>
+          <div className="mt-5 space-y-4">
+            {story.closing.body.map((paragraph) => (
+              <p
+                key={paragraph}
+                className="text-[0.98rem] leading-[1.7] text-ink-soft sm:text-[1.05rem]"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </Reveal>
+      ) : null}
+    </div>
+  );
+}
+
 export function CaseStudyView({ study }: CaseStudyViewProps) {
   const { previous, next } = getAdjacentCaseStudies(study.slug);
   const sectionClass = "mx-auto w-full max-w-6xl px-6 sm:px-8";
@@ -254,6 +594,10 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
             : undefined
         }
       >
+        {study.visualStory ? (
+          <VisualBrandLayout study={study} />
+        ) : (
+          <>
         <header className="mx-auto w-full max-w-6xl px-6 pt-14 sm:px-8 sm:pt-20">
           <Reveal>
             <p className="case-section-label text-sm font-medium tracking-[0.14em] text-muted uppercase">
@@ -331,6 +675,8 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
             </dl>
           </Reveal>
         </section>
+          </>
+        )}
 
         {study.whatIs ? (
           <section className={sectionClass}>
@@ -799,7 +1145,7 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
           </section>
         ) : null}
 
-        {study.typography ? (
+        {study.typography && !study.visualStory ? (
           <section className={sectionClass}>
             <Reveal>
               <h2 className="font-serif text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
