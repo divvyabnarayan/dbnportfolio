@@ -145,8 +145,7 @@ export function HeroJoyConScroller() {
   useEffect(() => {
     if (reduce || count < 2) return;
 
-    let interval: number;
-    let release: number;
+    let release: number | undefined;
 
     const tick = () => {
       if (!inView.current || moving.current) return;
@@ -171,10 +170,10 @@ export function HeroJoyConScroller() {
       }, 520);
     };
 
-    interval = window.setInterval(tick, 2800);
+    const interval = window.setInterval(tick, 2800);
     return () => {
       window.clearInterval(interval);
-      window.clearTimeout(release);
+      if (release !== undefined) window.clearTimeout(release);
     };
   }, [count, reduce, page, stick]);
 
