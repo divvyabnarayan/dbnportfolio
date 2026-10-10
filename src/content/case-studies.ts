@@ -31,6 +31,12 @@ export type CaseStudySectionGroup = {
   intro?: string;
   items?: CaseStudyDetailSection[];
   metrics?: CaseStudyMetric[];
+  image?: {
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+  };
 };
 
 export type NarrativeColorPalette = {
@@ -132,6 +138,10 @@ export type CaseStudyDetail = {
   cardStrokeColor?: string;
   /** Renders an interactive component collage instead of a hero image. */
   heroCollage?: boolean;
+  /** Extra classes for the hero image (e.g. object-position). */
+  heroImageClass?: string;
+  /** Aspect ratio class for the hero frame. Defaults to aspect-[16/9]. */
+  heroAspectClass?: string;
   intro: string;
   meta: CaseStudyMeta[];
   confidentialityNote?: string;
@@ -219,15 +229,23 @@ export type CaseStudyDetail = {
     heading?: string;
     subheading?: string;
     body?: string | string[];
+    items?: { heading: string; body: string }[];
     cards?: string[];
     colorPalettes?: {
       title: string;
+      /** Talhive-style full-bleed colour fields instead of small swatches. */
+      layout?: "swatches" | "brand";
+      /** No gaps between brand colour fields. */
+      flush?: boolean;
       groups?: {
         label: string;
         colors: { hex: string; hexEnd?: string; label?: string }[];
       }[];
       colors?: { hex: string; hexEnd?: string; label?: string }[];
     }[];
+    /** Extra heading + copy shown after colour palettes (e.g. packaging). */
+    afterPalette?: { heading: string; body: string };
+    imageLayout?: "stack" | "grid" | "flush";
     images?: {
       src: string;
       alt: string;
@@ -250,6 +268,8 @@ export type CaseStudyDetail = {
     label: string;
     heading?: string;
     body?: string;
+    afterBody?: string;
+    imageLayout?: "stack" | "flush";
     images?: {
       src: string;
       alt: string;
@@ -264,6 +284,7 @@ export type CaseStudyDetail = {
     body?: string;
     images?: { src: string; alt: string }[];
     closing?: string;
+    afterImageLayout?: "stack" | "grid" | "flush";
     afterImages?: {
       src: string;
       alt: string;
@@ -314,9 +335,14 @@ export type CaseStudyDetail = {
     }[];
   };
   moodBoard?: {
-    label: string;
+    label?: string;
     heading?: string;
-    body: string;
+    body?: string;
+    blocks?: {
+      heading: string;
+      body: string | string[];
+      image: { src: string; alt: string };
+    }[];
     colorPalettes?: {
       title: string;
       groups?: {
@@ -1870,9 +1896,9 @@ export const caseStudyDetails: CaseStudyDetail[] = [
     buildingTitle: "Talhive Branding",
     subtitle:
       "A logo and visual identity for a human capital firm that finds talent who fit both the role and the culture.",
-    heroImage: "/projects/talhive/slide-01.jpg",
+    heroImage: "/projects/talhive/hero-mockup.jpg",
     heroImageAlt:
-      "Talhive wordmark and hive mark over a professional portrait",
+      "Talhive brand mockup with mugs, notebook, business cards, lanyard, and pen",
     heroBackground: "#12141A",
     headingColor: "#2a37f5",
     cardStrokeColor: "color-mix(in srgb, #2a37f5 32%, white)",
@@ -1983,6 +2009,155 @@ export const caseStudyDetails: CaseStudyDetail[] = [
       ],
     },
   },
+
+  {
+    slug: "tea-catalog",
+    title: "Tea Branding",
+    buildingTitle: "Tea Branding",
+    subtitle: "Brand Identity & Catalog Design",
+    heroImage: "/projects/tea-catalog/hero-mockup.jpg",
+    heroImageAlt:
+      "Silk Brew Tea catalogue mockup on wood with eucalyptus and white flowers",
+    heroBackground: "#1a1814",
+    headingColor: "#104040",
+    cardStrokeColor: "color-mix(in srgb, #104040 28%, white)",
+    heroImageClass: "object-cover object-center",
+    heroAspectClass: "aspect-[3/2]",
+    intro:
+      "A visual identity, catalog and packaging design exploring how tea can be presented through a balance of editorial typography, considered colour, imagery and cohesive product presentation.",
+    meta: [
+      {
+        label: "MY ROLE",
+        value:
+          "Brand & Graphic Designer",
+      },
+      {
+        label: "DURATION",
+        value: "3 Months",
+      },
+      {
+        label: "TOOLS",
+        tools: [
+          { name: "Illustrator", icon: "/tools/illustrator.png" },
+          { name: "Photoshop", icon: "/tools/photoshop.png" },
+        ],
+      },
+    ],
+    journeyMapping: {
+      label: "Visual Identity",
+      items: [
+        {
+          heading: "Colour Palette",
+          body: "I chose a distinct colour palette to differentiate the tea varieties while maintaining a cohesive visual identity across the catalogue.",
+        },
+        {
+          heading: "Typography",
+          body: "I retained the company’s existing typeface to preserve brand consistency, balancing editorial expression with clear, readable product information.",
+        },
+        {
+          heading: "Graphic Language",
+          body: "I established a consistent graphic language across the catalogue spreads to create visual continuity and give the collection a distinctive, recognisable character.",
+        },
+      ],
+      colorPalettes: [
+        {
+          title: "Palette",
+          layout: "brand",
+          flush: true,
+          colors: [
+            { hex: "#104040", label: "Forest" },
+            { hex: "#B09060", label: "Gold" },
+            { hex: "#D0A090", label: "Sand" },
+            { hex: "#301040", label: "Plum" },
+            { hex: "#601010", label: "Burgundy" },
+            { hex: "#406030", label: "Leaf" },
+            { hex: "#004070", label: "Navy" },
+            { hex: "#F7F4EF", label: "Paper" },
+          ],
+        },
+      ],
+      afterPalette: {
+        heading: "Packaging Design",
+        body: "I explored how the catalogue’s visual identity could translate into packaging, refining the use of colour, typography and graphic elements to maintain consistency across both formats. Through this process, I focused on differentiating the tea varieties while preserving a cohesive brand language, balancing shelf appeal with clear product communication to create a unified presentation across the collection.",
+      },
+      imageLayout: "flush",
+      images: [
+        {
+          src: "/projects/tea-catalog/packaging-baker-street.jpg",
+          alt: "Baker Street English Breakfast tea pouch and tin lifestyle mockup",
+          width: 2048,
+          height: 1372,
+        },
+        {
+          src: "/projects/tea-catalog/packaging-big-boss.jpg",
+          alt: "The Big Boss Silver Needle tea pouch and tin lifestyle mockup",
+          width: 2048,
+          height: 1142,
+        },
+      ],
+    },
+    gigaMap: {
+      label: "Catalog Design",
+      body: "I developed a consistent layout system to organise the tea range, using structured grids, considered spacing and recurring graphic elements to create continuity across spreads. The system provided a clear framework for presenting different tea varieties while allowing each product to maintain its own visual character.",
+      afterBody:
+        "I organised product names, descriptions, details and imagery according to their importance, making the catalogue easy to navigate and product information simple to digest. By balancing clear typography and structured layouts with expressive imagery and colour, I created an editorial experience that was both informative and visually engaging.",
+      imageLayout: "flush",
+      images: [
+        {
+          src: "/projects/tea-catalog/spread-white-teas.jpg",
+          alt: "White Teas catalogue spread with packaging and product listings",
+          width: 1024,
+          height: 682,
+        },
+        {
+          src: "/projects/tea-catalog/spread-tisanes.jpg",
+          alt: "Tisanes catalogue spread with packaging and product listings",
+          width: 1024,
+          height: 682,
+        },
+      ],
+    },
+    detailGroups: [
+      {
+        label: "Outcome",
+        intro:
+          "The final design brings the branding, catalogue and packaging together through a consistent visual language. I made deliberate decisions around colour, typography, imagery and layout to ensure each touchpoint felt distinctive yet connected to the same identity. The result is a cohesive brand system that carries the visual character of the tea range across both print and packaging, balancing editorial expression with clear product communication.",
+        image: {
+          src: "/projects/tea-catalog/outcome-vino-jazz.jpg",
+          alt: "Hand holding Vino Jazz wine smoked black tea tin lifestyle mockup",
+          width: 1024,
+          height: 591,
+        },
+      },
+      {
+        label: "Design Principles",
+        items: [
+          {
+            heading: "Clear hierarchy",
+            body: "Product information should be easy to scan.",
+          },
+          {
+            heading: "Consistent system",
+            body: "Each spread should feel part of the same collection.",
+          },
+          {
+            heading: "Visual distinction",
+            body: "Individual tea varieties should have their own character.",
+          },
+          {
+            heading: "Editorial balance",
+            body: "Photography, typography and negative space should work together rather than compete.",
+          },
+        ],
+        image: {
+          src: "/projects/tea-catalog/principles-inner-peace.jpg",
+          alt: "Hands filling Inner Peace hibiscus green tea pouch on a wooden kitchen table",
+          width: 1024,
+          height: 571,
+        },
+      },
+    ],
+  },
 ];
 
 export function getCaseStudy(slug: string) {
@@ -1996,6 +2171,7 @@ export const caseStudyOrder = [
   "little-sprout",
   "amigo",
   "talhive",
+  "tea-catalog",
 ] as const;
 
 function getOrderedCaseStudies() {

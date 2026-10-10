@@ -41,8 +41,8 @@ export const caseStudies: CaseStudy[] = [
   {
     title: "Design System",
     description:
-      "A scalable Figma design system for an Australian Telecom Provider with reusable components, design tokens, and accessibility standards to improve consistency and streamline design to development collaboration.",
-    tags: ["UI Design", "Design Systems", "Figma", "analytics"],
+      "A scalable Figma design system for an Australian Telecom Provider with reusable components.",
+    tags: ["UI Design", "Design Systems", "Figma", "Google Analytics"],
     slug: "flip-design-system",
     href: "/work/flip-design-system",
     image: "/projects/flip/work-card.png?v=3",
@@ -52,7 +52,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Little Sprout",
     description:
       "A pregnancy tracker that centralizes health data, symptom and medicine tracking, appointments, wellness support, and communication with doctors and caregivers.",
-    tags: ["UI/UX", "prototyping"],
+    tags: ["UI/UX", "Prototyping", "User Testing"],
     slug: "little-sprout",
     href: "/work/little-sprout",
     image: "/projects/little-sprout/solution-slide-18.jpg",
@@ -61,7 +61,7 @@ export const caseStudies: CaseStudy[] = [
   {
     title: "Amigo",
     description:
-      "A gamified task management app helping kids aged 5–13 track academic work, earn rewards, and build confidence — with parent visibility built in.",
+      "A gamified task management app helping kids aged 5–13 track academic work, earn rewards, and build confidence with parent visibility built in.",
     tags: ["UI Design", "Visual Design", "Figma"],
     slug: "amigo",
     href: "/work/amigo",
@@ -77,6 +77,16 @@ export const caseStudies: CaseStudy[] = [
     href: "/work/talhive",
     image: "/projects/talhive/cover.png",
     imageAlt: "Talhive logo design cover",
+  },
+  {
+    title: "Tea Branding",
+    description:
+      "A visual identity, packaging and catalog design for a tea brand.",
+    tags: ["Brand Design", "Catalog Design", "Packaging Design"],
+    slug: "tea-catalog",
+    href: "/work/tea-catalog",
+    image: "/projects/tea-catalog/cover.jpg",
+    imageAlt: "Silk Brew Tea catalogue cover",
   },
 ];
 
@@ -106,6 +116,23 @@ export const otherProjects: OtherProject[] = [
     image: "/projects/zest/cover.png",
     imageAlt: "Zest chocolate app design cover",
   },
+];
+
+export const heroProjects = [
+  ...caseStudies.map(({ title, href, image, imageAlt, tags }) => ({
+    title,
+    href,
+    image,
+    imageAlt,
+    tags,
+  })),
+  ...otherProjects.map(({ title, href, image, imageAlt, context }) => ({
+    title,
+    href,
+    image,
+    imageAlt,
+    tags: [context],
+  })),
 ];
 
 export type Skill = {

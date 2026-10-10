@@ -1,4 +1,5 @@
 import { footer, site } from "@/content/site";
+import { pageShellClass } from "@/lib/layout";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -13,7 +14,7 @@ export function Footer() {
         className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(45,212,191,0.28),transparent_70%)] blur-2xl"
       />
 
-      <div className="relative mx-auto flex w-full max-w-5xl flex-col px-6 py-20 sm:px-8 sm:py-28">
+      <div className={`relative flex flex-col py-20 sm:py-28 ${pageShellClass}`}>
         <p className="text-sm font-medium tracking-[0.16em] text-glow/80 uppercase">
           {footer.eyebrow}
         </p>

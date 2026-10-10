@@ -228,6 +228,148 @@ function hexIsLight(hex: string) {
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.62;
 }
 
+function BrandPaletteFields({
+  palettes,
+  flush = false,
+}: {
+  palettes: { hex: string; name?: string; wordmark?: string }[];
+  /** No gaps between colour fields — one continuous block. */
+  flush?: boolean;
+}) {
+  const gapClass = flush ? "gap-0" : "gap-2";
+  const rowGapClass = flush ? "" : "mt-2";
+  const firstPalettes = palettes.slice(0, 2);
+  const restPalettes = palettes.slice(2);
+
+  if (flush && palettes.length > 2) {
+    const spans =
+      palettes.length === 8
+        ? [
+            "col-span-2 row-span-2 min-h-[16rem] sm:col-span-7 sm:min-h-[22rem]",
+            "col-span-2 min-h-[9rem] sm:col-span-5 sm:min-h-[11rem]",
+            "col-span-2 min-h-[9rem] sm:col-span-5 sm:min-h-[11rem]",
+            "col-span-1 min-h-[9rem] sm:col-span-4 sm:min-h-[12rem]",
+            "col-span-1 min-h-[9rem] sm:col-span-4 sm:min-h-[12rem]",
+            "col-span-2 min-h-[9rem] sm:col-span-4 sm:min-h-[12rem]",
+            "col-span-1 min-h-[9rem] sm:col-span-7 sm:min-h-[11rem]",
+            "col-span-1 min-h-[9rem] sm:col-span-5 sm:min-h-[11rem]",
+          ]
+        : palettes.map(() => "col-span-1 min-h-[11rem] sm:col-span-3 sm:min-h-[14rem]");
+
+    return (
+      <div className="grid auto-rows-fr grid-cols-2 gap-0 sm:grid-cols-12">
+        {palettes.map((palette, index) => {
+          const light = hexIsLight(palette.hex);
+          const ink = light ? "#121816" : "#ffffff";
+          const isLarge = index === 0;
+          return (
+            <div
+              key={palette.hex}
+              className={`flex flex-col justify-between px-5 py-5 sm:px-8 sm:py-7 ${spans[index] ?? ""}`}
+              style={{ backgroundColor: palette.hex }}
+            >
+              <div className="flex flex-1 items-center justify-center">
+                <p
+                  className={`font-serif font-semibold tracking-[-0.03em] ${
+                    isLarge
+                      ? "text-3xl sm:text-4xl"
+                      : "text-xl sm:text-2xl"
+                  }`}
+                  style={{ color: ink }}
+                >
+                  {palette.wordmark ?? palette.name ?? palette.hex}
+                </p>
+              </div>
+              <p
+                className="text-xs font-medium tracking-[0.06em]"
+                style={{ color: light ? "#121816" : "rgba(255,255,255,0.86)" }}
+              >
+                HEX: {palette.hex}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className={`grid ${gapClass} sm:grid-cols-2`}>
+        {firstPalettes.map((palette) => {
+          const light = hexIsLight(palette.hex);
+          const ink = light ? "#121816" : "#ffffff";
+          return (
+            <div
+              key={palette.hex}
+              className="flex min-h-[14rem] flex-col justify-between px-8 py-8 sm:min-h-[18rem] sm:px-10"
+              style={{ backgroundColor: palette.hex }}
+            >
+              <div className="flex flex-1 items-center justify-center">
+                <p
+                  className="font-serif text-3xl font-semibold tracking-[-0.03em] sm:text-4xl"
+                  style={{ color: ink }}
+                >
+                  {palette.wordmark ?? palette.name ?? palette.hex}
+                </p>
+              </div>
+              <p
+                className="text-xs font-medium tracking-[0.06em]"
+                style={{ color: light ? "#121816" : "rgba(255,255,255,0.86)" }}
+              >
+                HEX: {palette.hex}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+      {restPalettes.length ? (
+        <div
+          className={
+            restPalettes.length > 4
+              ? `${rowGapClass} grid grid-cols-2 ${gapClass} sm:grid-cols-3`
+              : `${rowGapClass} grid ${gapClass}`
+          }
+          style={
+            restPalettes.length > 4
+              ? undefined
+              : {
+                  gridTemplateColumns: `repeat(${restPalettes.length}, minmax(0, 1fr))`,
+                }
+          }
+        >
+          {restPalettes.map((palette) => {
+            const light = hexIsLight(palette.hex);
+            const ink = light ? "#121816" : "#ffffff";
+            return (
+              <div
+                key={palette.hex}
+                className="flex min-h-[11rem] flex-col justify-between px-6 py-6 sm:min-h-[14rem] sm:px-8"
+                style={{ backgroundColor: palette.hex }}
+              >
+                <div className="flex flex-1 items-center justify-center">
+                  <p
+                    className="font-serif text-2xl font-semibold tracking-[-0.03em]"
+                    style={{ color: ink }}
+                  >
+                    {palette.wordmark ?? palette.name ?? palette.hex}
+                  </p>
+                </div>
+                <p
+                  className="text-xs font-medium tracking-[0.06em]"
+                  style={{ color: light ? "#121816" : "rgba(255,255,255,0.86)" }}
+                >
+                  HEX: {palette.hex}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      ) : null}
+    </>
+  );
+}
+
 function VisualFrame({
   src,
   alt,
@@ -271,9 +413,6 @@ function VisualBrandLayout({ study }: { study: CaseStudyDetail }) {
   const story = study.visualStory;
   if (!story) return null;
 
-  const firstPalettes = story.palettes?.slice(0, 2) ?? [];
-  const restPalettes = story.palettes?.slice(2) ?? [];
-
   return (
     <div className="mx-auto w-full max-w-6xl px-6 pt-14 sm:px-8 sm:pt-20">
       <Reveal>
@@ -288,20 +427,19 @@ function VisualBrandLayout({ study }: { study: CaseStudyDetail }) {
 
       <Reveal className="mt-10 sm:mt-12" delay={0.06}>
         <div
-          className="relative overflow-hidden rounded-[1.5rem]"
+          className="flex justify-center overflow-hidden rounded-[1.5rem]"
           style={{ backgroundColor: study.heroBackground }}
         >
-          <div className="relative aspect-[16/9] w-full">
-            <Image
-              src={study.heroImage}
-              alt={study.heroImageAlt}
-              fill
-              unoptimized
-              priority
-              sizes="(max-width: 1152px) 100vw, 1152px"
-              className="object-cover object-top"
-            />
-          </div>
+          <Image
+            src={study.heroImage}
+            alt={study.heroImageAlt}
+            width={2048}
+            height={1142}
+            unoptimized
+            priority
+            sizes="(max-width: 1152px) 100vw, 1152px"
+            className="h-auto w-full object-contain object-center"
+          />
         </div>
       </Reveal>
 
@@ -411,69 +549,7 @@ function VisualBrandLayout({ study }: { study: CaseStudyDetail }) {
 
         {story.palettes?.length ? (
           <Reveal>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {firstPalettes.map((palette) => {
-                const light = hexIsLight(palette.hex);
-                const ink = light ? "#121816" : "#ffffff";
-                return (
-                  <div
-                    key={palette.hex}
-                    className="flex min-h-[14rem] flex-col justify-between px-8 py-8 sm:min-h-[18rem] sm:px-10"
-                    style={{ backgroundColor: palette.hex }}
-                  >
-                    <div className="flex flex-1 items-center justify-center">
-                      <p
-                        className="font-serif text-3xl font-semibold tracking-[-0.03em] sm:text-4xl"
-                        style={{ color: ink }}
-                      >
-                        {palette.wordmark ?? palette.name ?? palette.hex}
-                      </p>
-                    </div>
-                    <p
-                      className="text-xs font-medium tracking-[0.06em]"
-                      style={{ color: light ? "#121816" : "rgba(255,255,255,0.86)" }}
-                    >
-                      HEX: {palette.hex}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-            {restPalettes.length ? (
-              <div
-                className="mt-2 grid gap-2"
-                style={{
-                  gridTemplateColumns: `repeat(${restPalettes.length}, minmax(0, 1fr))`,
-                }}
-              >
-                {restPalettes.map((palette) => {
-                  const light = hexIsLight(palette.hex);
-                  const ink = light ? "#121816" : "#ffffff";
-                  return (
-                    <div
-                      key={palette.hex}
-                      className="flex min-h-[11rem] flex-col justify-between px-6 py-6 sm:min-h-[14rem] sm:px-8"
-                      style={{ backgroundColor: palette.hex }}
-                    >
-                      <div className="flex flex-1 items-center justify-center">
-                        <p
-                          className="font-serif text-2xl font-semibold tracking-[-0.03em]"
-                          style={{ color: ink }}
-                        >
-                          {palette.wordmark ?? palette.name ?? palette.hex}
-                        </p>
-                      </div>
-                      <p
-                        className="text-xs font-medium tracking-[0.06em]"
-                        style={{ color: light ? "#121816" : "rgba(255,255,255,0.86)" }}
-                      >
-                        HEX: {palette.hex}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : null}
+            <BrandPaletteFields palettes={story.palettes} />
           </Reveal>
         ) : null}
 
@@ -598,7 +674,13 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
           <VisualBrandLayout study={study} />
         ) : (
           <>
-        <header className="mx-auto w-full max-w-6xl px-6 pt-14 sm:px-8 sm:pt-20">
+        <header
+          className={`mx-auto w-full max-w-6xl px-6 sm:px-8 ${
+            study.slug === "tea-catalog"
+              ? "pt-10 sm:pt-12"
+              : "pt-14 sm:pt-20"
+          }`}
+        >
           <Reveal>
             <p className="case-section-label text-sm font-medium tracking-[0.14em] text-muted uppercase">
               Case study
@@ -611,12 +693,23 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
             </p>
           </Reveal>
 
-          <Reveal className="mt-10 sm:mt-12" delay={0.05}>
+          <Reveal
+            className={
+              study.slug === "tea-catalog"
+                ? "mt-6 sm:mt-8"
+                : "mt-10 sm:mt-12"
+            }
+            delay={0.05}
+          >
             <div
               className="relative overflow-hidden rounded-[1.75rem] border border-black/5 shadow-[0_24px_60px_-32px_rgba(18,24,22,0.45)]"
               style={{ backgroundColor: study.heroBackground }}
             >
-              <div className="relative aspect-[16/9] w-full">
+              <div
+                className={`relative w-full ${
+                  study.heroAspectClass ?? "aspect-[16/9]"
+                }`}
+              >
                 {study.heroCollage ? (
                   <FlipComponentCollageFromImages />
                 ) : (
@@ -627,7 +720,9 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
                     unoptimized
                     priority
                     sizes="(max-width: 1152px) 100vw, 1152px"
-                    className="object-cover object-top"
+                    className={
+                      study.heroImageClass ?? "object-cover object-top"
+                    }
                   />
                 )}
               </div>
@@ -1033,9 +1128,61 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
               ) : null}
             </Reveal>
 
+            {study.journeyMapping.items?.length ? (
+              <div
+                className={`grid gap-4 sm:grid-cols-3 sm:gap-5 ${
+                  study.journeyMapping.label ||
+                  study.journeyMapping.heading ||
+                  study.journeyMapping.body
+                    ? "mt-8 sm:mt-10"
+                    : ""
+                }`}
+              >
+                {study.journeyMapping.items.map((item, index) => {
+                  const cardTints = ["#F3E4D8", "#EDE6DC", "#E8E2D6"];
+                  return (
+                  <Reveal key={item.heading} className="h-full">
+                    <article
+                      className="case-card relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-black/[0.06] p-6 shadow-[0_12px_40px_-28px_rgba(15,23,42,0.28)] sm:p-7"
+                      style={{ backgroundColor: cardTints[index % cardTints.length] }}
+                    >
+                      <TeaLeafSilhouette
+                        variant={0}
+                        className="pointer-events-none absolute -right-4 top-1/2 h-[118%] w-auto opacity-[0.14] sm:-right-6"
+                        style={{
+                          color: "#3A1A12",
+                          transform: `translateY(-50%) rotate(${
+                            index === 1 ? 10 : index === 2 ? -8 : 4
+                          }deg)`,
+                        }}
+                      />
+                      <h3 className="relative z-[1] font-serif text-xl font-semibold tracking-[-0.02em] text-ink sm:text-2xl">
+                        {item.heading}
+                      </h3>
+                      <p className="relative z-[1] mt-3 text-base leading-relaxed text-ink-soft sm:text-[1.05rem]">
+                        {item.body}
+                      </p>
+                    </article>
+                  </Reveal>
+                  );
+                })}
+              </div>
+            ) : null}
+
             {study.journeyMapping.colorPalettes?.length ? (
               <div className="mt-10 space-y-10 sm:mt-12">
-                {study.journeyMapping.colorPalettes.map((palette) => (
+                {study.journeyMapping.colorPalettes.map((palette) =>
+                  palette.layout === "brand" ? (
+                    <Reveal key={palette.title}>
+                      <BrandPaletteFields
+                        flush={palette.flush}
+                        palettes={(palette.colors ?? []).map((color) => ({
+                          hex: color.hex,
+                          name: color.label,
+                        }))}
+                      />
+                    </Reveal>
+                  ) : (
                   <Reveal key={palette.title}>
                     <h3 className="text-lg font-semibold tracking-[-0.02em] text-ink sm:text-xl">
                       {palette.title}
@@ -1081,8 +1228,20 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
                       )}
                     </div>
                   </Reveal>
-                ))}
+                  ),
+                )}
               </div>
+            ) : null}
+
+            {study.journeyMapping.afterPalette ? (
+              <Reveal className="mt-12 w-full sm:mt-14">
+                <h3 className="font-serif text-xl font-semibold tracking-[-0.02em] text-ink sm:text-2xl">
+                  {study.journeyMapping.afterPalette.heading}
+                </h3>
+                <p className="mt-4 w-full text-base leading-relaxed text-ink-soft sm:text-lg">
+                  {study.journeyMapping.afterPalette.body}
+                </p>
+              </Reveal>
             ) : null}
 
             {study.journeyMapping.cards?.length ? (
@@ -1103,44 +1262,113 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
             ) : null}
 
             {study.journeyMapping.images?.length ? (
-              <div
-                className={
-                  study.journeyMapping.heading ||
-                  study.journeyMapping.body ||
-                  study.journeyMapping.cards?.length
-                    ? "mt-10 space-y-6 sm:mt-12"
-                    : "mt-6 space-y-6 sm:mt-8"
-                }
-              >
-                {study.journeyMapping.images.map((image, index) => (
-                  <Reveal key={`${image.src}-${index}`} delay={index * 0.04}>
-                    {image.objectFit === "contain" ? (
-                      <div className="overflow-hidden rounded-[1.5rem] border border-line bg-white">
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          width={image.width ?? 1600}
-                          height={image.height ?? 900}
-                          unoptimized
-                          sizes="(max-width: 1152px) 100vw, 1152px"
-                          className="h-auto w-full"
-                        />
-                      </div>
-                    ) : (
-                      <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-line bg-surface">
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          fill
-                          unoptimized
-                          sizes="(max-width: 1152px) 100vw, 1152px"
-                          className="object-cover object-top"
-                        />
-                      </div>
-                    )}
-                  </Reveal>
-                ))}
-              </div>
+              study.journeyMapping.imageLayout === "flush" ? (
+                <Reveal
+                  className={
+                    study.journeyMapping.afterPalette ||
+                    study.journeyMapping.colorPalettes?.length
+                      ? "mt-8 sm:mt-10"
+                      : "mt-6 sm:mt-8"
+                  }
+                >
+                  <div className="flex w-full flex-col gap-3 sm:gap-4">
+                    {study.journeyMapping.images.map((image) => (
+                      <Image
+                        key={image.src}
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width ?? 2048}
+                        height={image.height ?? 1142}
+                        unoptimized
+                        sizes="(max-width: 1152px) 100vw, 1152px"
+                        className="h-auto w-full rounded-none"
+                      />
+                    ))}
+                  </div>
+                </Reveal>
+              ) : study.journeyMapping.imageLayout === "grid" ? (
+                <Reveal
+                  className={
+                    study.journeyMapping.heading ||
+                    study.journeyMapping.body ||
+                    study.journeyMapping.cards?.length ||
+                    study.journeyMapping.colorPalettes?.length ||
+                    study.journeyMapping.afterPalette
+                      ? "mt-8 sm:mt-10"
+                      : "mt-6 sm:mt-8"
+                  }
+                >
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-6 sm:gap-4">
+                    {study.journeyMapping.images.map((image, index) => {
+                      const count = study.journeyMapping?.images?.length ?? 0;
+                      const spanClass =
+                        count === 5
+                          ? index < 3
+                            ? "sm:col-span-2"
+                            : "sm:col-span-3"
+                          : "sm:col-span-2";
+                      return (
+                        <div
+                          key={`${image.src}-${index}`}
+                          className={`relative aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-line bg-surface ${spanClass}`}
+                        >
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            fill
+                            unoptimized
+                            sizes="(max-width: 640px) 50vw, 400px"
+                            className={
+                              image.objectFit === "contain"
+                                ? "object-contain"
+                                : "object-cover"
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Reveal>
+              ) : (
+                <div
+                  className={
+                    study.journeyMapping.heading ||
+                    study.journeyMapping.body ||
+                    study.journeyMapping.cards?.length
+                      ? "mt-10 space-y-6 sm:mt-12"
+                      : "mt-6 space-y-6 sm:mt-8"
+                  }
+                >
+                  {study.journeyMapping.images.map((image, index) => (
+                    <Reveal key={`${image.src}-${index}`} delay={index * 0.04}>
+                      {image.objectFit === "contain" ? (
+                        <div className="overflow-hidden rounded-[1.5rem] border border-line bg-white">
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            width={image.width ?? 1600}
+                            height={image.height ?? 900}
+                            unoptimized
+                            sizes="(max-width: 1152px) 100vw, 1152px"
+                            className="h-auto w-full"
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-line bg-surface">
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            fill
+                            unoptimized
+                            sizes="(max-width: 1152px) 100vw, 1152px"
+                            className="object-cover object-top"
+                          />
+                        </div>
+                      )}
+                    </Reveal>
+                  ))}
+                </div>
+              )
             ) : null}
           </section>
         ) : null}
@@ -1321,45 +1549,69 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
                   {study.gigaMap.body}
                 </p>
               ) : null}
+              {study.gigaMap.afterBody ? (
+                <p className="mt-5 text-base leading-relaxed text-ink-soft sm:text-lg">
+                  {study.gigaMap.afterBody}
+                </p>
+              ) : null}
             </Reveal>
 
             {study.gigaMap.images?.length ? (
-              <div
-                className={
-                  study.gigaMap.heading || study.gigaMap.body
-                    ? "mt-10 space-y-6 sm:mt-12"
-                    : "mt-8 space-y-6 sm:mt-10"
-                }
-              >
-                {study.gigaMap.images.map((image, index) => (
-                  <Reveal key={`${image.src}-${index}`} delay={index * 0.04}>
-                    {image.objectFit === "contain" ? (
-                      <div className="overflow-hidden rounded-[1.5rem] border border-line bg-white">
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          width={image.width ?? 1600}
-                          height={image.height ?? 900}
-                          unoptimized
-                          sizes="(max-width: 1152px) 100vw, 1152px"
-                          className="h-auto w-full"
-                        />
-                      </div>
-                    ) : (
-                      <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-line bg-surface">
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          fill
-                          unoptimized
-                          sizes="(max-width: 1152px) 100vw, 1152px"
-                          className="object-cover object-top"
-                        />
-                      </div>
-                    )}
-                  </Reveal>
-                ))}
-              </div>
+              study.gigaMap.imageLayout === "flush" ? (
+                <Reveal className="mt-8 sm:mt-10">
+                  <div className="flex w-full flex-col gap-0">
+                    {study.gigaMap.images.map((image) => (
+                      <Image
+                        key={image.src}
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width ?? 2048}
+                        height={image.height ?? 1142}
+                        unoptimized
+                        sizes="(max-width: 1152px) 100vw, 1152px"
+                        className="h-auto w-full rounded-none"
+                      />
+                    ))}
+                  </div>
+                </Reveal>
+              ) : (
+                <div
+                  className={
+                    study.gigaMap.heading || study.gigaMap.body
+                      ? "mt-10 space-y-6 sm:mt-12"
+                      : "mt-8 space-y-6 sm:mt-10"
+                  }
+                >
+                  {study.gigaMap.images.map((image, index) => (
+                    <Reveal key={`${image.src}-${index}`} delay={index * 0.04}>
+                      {image.objectFit === "contain" ? (
+                        <div className="overflow-hidden rounded-[1.5rem] border border-line bg-white">
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            width={image.width ?? 1600}
+                            height={image.height ?? 900}
+                            unoptimized
+                            sizes="(max-width: 1152px) 100vw, 1152px"
+                            className="h-auto w-full"
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-line bg-surface">
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            fill
+                            unoptimized
+                            sizes="(max-width: 1152px) 100vw, 1152px"
+                            className="object-cover object-top"
+                          />
+                        </div>
+                      )}
+                    </Reveal>
+                  ))}
+                </div>
+              )
             ) : null}
           </section>
         ) : null}
@@ -1410,36 +1662,79 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
             ) : null}
 
             {study.ideaGeneration.afterImages?.length ? (
-              <div className="mt-8 space-y-6 sm:mt-10">
-                {study.ideaGeneration.afterImages.map((image, index) => (
-                  <Reveal key={`${image.src}-${index}`} delay={index * 0.04}>
-                    {image.objectFit === "contain" ? (
-                      <div className="overflow-hidden rounded-[1.5rem] border border-line bg-white">
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          width={image.width ?? 1600}
-                          height={image.height ?? 900}
-                          unoptimized
-                          sizes="(max-width: 1152px) 100vw, 1152px"
-                          className="h-auto w-full"
-                        />
-                      </div>
-                    ) : (
-                      <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-line bg-surface">
+              study.ideaGeneration.afterImageLayout === "flush" ? (
+                <Reveal className="mt-8 sm:mt-10">
+                  <div className="flex w-full flex-col gap-0">
+                    {study.ideaGeneration.afterImages.map((image) => (
+                      <Image
+                        key={image.src}
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width ?? 2048}
+                        height={image.height ?? 1142}
+                        unoptimized
+                        sizes="(max-width: 1152px) 100vw, 1152px"
+                        className="h-auto w-full rounded-none"
+                      />
+                    ))}
+                  </div>
+                </Reveal>
+              ) : study.ideaGeneration.afterImageLayout === "grid" ? (
+                <Reveal className="mt-8 sm:mt-10">
+                  <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                    {study.ideaGeneration.afterImages.map((image, index) => (
+                      <div
+                        key={`${image.src}-${index}`}
+                        className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-line bg-surface"
+                      >
                         <Image
                           src={image.src}
                           alt={image.alt}
                           fill
                           unoptimized
-                          sizes="(max-width: 1152px) 100vw, 1152px"
-                          className="object-cover object-top"
+                          sizes="(max-width: 640px) 100vw, 560px"
+                          className={
+                            image.objectFit === "contain"
+                              ? "object-contain"
+                              : "object-cover"
+                          }
                         />
                       </div>
-                    )}
-                  </Reveal>
-                ))}
-              </div>
+                    ))}
+                  </div>
+                </Reveal>
+              ) : (
+                <div className="mt-8 space-y-6 sm:mt-10">
+                  {study.ideaGeneration.afterImages.map((image, index) => (
+                    <Reveal key={`${image.src}-${index}`} delay={index * 0.04}>
+                      {image.objectFit === "contain" ? (
+                        <div className="overflow-hidden rounded-[1.5rem] border border-line bg-white">
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            width={image.width ?? 1600}
+                            height={image.height ?? 900}
+                            unoptimized
+                            sizes="(max-width: 1152px) 100vw, 1152px"
+                            className="h-auto w-full"
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-line bg-surface">
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            fill
+                            unoptimized
+                            sizes="(max-width: 1152px) 100vw, 1152px"
+                            className="object-cover object-top"
+                          />
+                        </div>
+                      )}
+                    </Reveal>
+                  ))}
+                </div>
+              )
             ) : null}
           </section>
         ) : null}
@@ -1571,23 +1866,31 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
 
         {study.moodBoard ? (
           <section className={sectionClass}>
-            <Reveal>
-              <p className="mb-4 case-section-label text-xs font-semibold tracking-[0.18em] text-muted uppercase">
-                {study.moodBoard.label}
-              </p>
-              {study.moodBoard.heading ? (
-                <h2 className="font-serif text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
-                  {study.moodBoard.heading}
-                </h2>
-              ) : null}
-              <p
-                className={`text-base leading-relaxed text-ink-soft sm:text-lg ${
-                  study.moodBoard.heading ? "mt-5" : ""
-                }`}
-              >
-                {study.moodBoard.body}
-              </p>
-            </Reveal>
+            {study.moodBoard.label ||
+            study.moodBoard.heading ||
+            study.moodBoard.body ? (
+              <Reveal>
+                {study.moodBoard.label ? (
+                  <p className="mb-4 case-section-label text-xs font-semibold tracking-[0.18em] text-muted uppercase">
+                    {study.moodBoard.label}
+                  </p>
+                ) : null}
+                {study.moodBoard.heading ? (
+                  <h2 className="font-serif text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
+                    {study.moodBoard.heading}
+                  </h2>
+                ) : null}
+                {study.moodBoard.body ? (
+                  <p
+                    className={`text-base leading-relaxed text-ink-soft sm:text-lg ${
+                      study.moodBoard.heading ? "mt-5" : ""
+                    }`}
+                  >
+                    {study.moodBoard.body}
+                  </p>
+                ) : null}
+              </Reveal>
+            ) : null}
 
             {study.moodBoard.colorPalettes?.length ? (
               <div className="mt-10 space-y-10 sm:mt-12">
@@ -1645,6 +1948,50 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
                           </div>
                         ),
                       )}
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            ) : null}
+
+            {study.moodBoard.blocks?.length ? (
+              <div
+                className={`flex flex-col gap-14 sm:gap-20 ${
+                  study.moodBoard.label ||
+                  study.moodBoard.heading ||
+                  study.moodBoard.body
+                    ? "mt-12 sm:mt-16"
+                    : ""
+                }`}
+              >
+                {study.moodBoard.blocks.map((block) => (
+                  <Reveal key={block.heading}>
+                    <div className="grid items-center gap-8 sm:grid-cols-2 sm:gap-12">
+                      <div>
+                        <h3 className="font-serif text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
+                          {block.heading}
+                        </h3>
+                        {(Array.isArray(block.body) ? block.body : [block.body]).map(
+                          (paragraph) => (
+                            <p
+                              key={paragraph}
+                              className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg"
+                            >
+                              {paragraph}
+                            </p>
+                          ),
+                        )}
+                      </div>
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-surface">
+                        <Image
+                          src={block.image.src}
+                          alt={block.image.alt}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 640px) 100vw, 560px"
+                          className="object-cover"
+                        />
+                      </div>
                     </div>
                   </Reveal>
                 ))}
@@ -2125,7 +2472,7 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
                 {group.label}
               </p>
               {group.intro ? (
-                <p className="font-serif mt-5 text-xl leading-snug tracking-[-0.02em] text-ink sm:text-2xl">
+                <p className="mt-5 text-base leading-relaxed text-ink-soft sm:text-lg">
                   {group.intro}
                 </p>
               ) : null}
@@ -2171,6 +2518,20 @@ export function CaseStudyView({ study }: CaseStudyViewProps) {
                 </Reveal>
               ))}
             </div>
+            ) : null}
+
+            {group.image ? (
+              <Reveal className="mt-8 sm:mt-10">
+                <Image
+                  src={group.image.src}
+                  alt={group.image.alt}
+                  width={group.image.width ?? 1600}
+                  height={group.image.height ?? 900}
+                  unoptimized
+                  sizes="(max-width: 1152px) 100vw, 1152px"
+                  className="h-auto w-full rounded-none"
+                />
+              </Reveal>
             ) : null}
             </section>
           </Fragment>
@@ -2280,6 +2641,103 @@ function FeatureCardIcon({ name }: { name: "audio" | "tactile" }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+function TeaLeafSilhouette({
+  variant = 0,
+  className,
+  style,
+}: {
+  variant?: number;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  // Flat solid botanical sprigs — catalogue graphic language
+  const Leaf = ({
+    cx,
+    cy,
+    rx,
+    ry,
+    rot,
+  }: {
+    cx: number;
+    cy: number;
+    rx: number;
+    ry: number;
+    rot: number;
+  }) => (
+    <ellipse
+      fill="currentColor"
+      cx={cx}
+      cy={cy}
+      rx={rx}
+      ry={ry}
+      transform={`rotate(${rot} ${cx} ${cy})`}
+    />
+  );
+
+  const Stem = ({ d }: { d: string }) => (
+    <path fill="currentColor" d={d} />
+  );
+
+  const sprigs = [
+    // Tall pointed leaves along a stem
+    <g key="lanceolate">
+      <Stem d="M59 248c1-44 2-88 2.4-132 .3-30 0-60-1.4-90-.3-5.2 7.8-5.2 8.1 0 1.4 30 1.7 60 1.4 90-.4 44-1.4 88-2.4 132-.4 5.2-7.7 5.2-8.1 0Z" />
+      <Leaf cx={44} cy={42} rx={7} ry={20} rot={-32} />
+      <Leaf cx={78} cy={48} rx={7} ry={19} rot={34} />
+      <Leaf cx={40} cy={88} rx={8} ry={23} rot={-28} />
+      <Leaf cx={82} cy={96} rx={8} ry={22} rot={30} />
+      <Leaf cx={38} cy={138} rx={8.5} ry={24} rot={-26} />
+      <Leaf cx={84} cy={146} rx={8.5} ry={23} rot={28} />
+      <Leaf cx={42} cy={188} rx={7.5} ry={21} rot={-30} />
+      <Leaf cx={80} cy={196} rx={7.5} ry={20} rot={32} />
+      <Leaf cx={46} cy={228} rx={6.5} ry={16} rot={-24} />
+    </g>,
+    // Soft rounded / heart-like paired leaves
+    <g key="rounded">
+      <Stem d="M59 250c.8-42 1.6-84 2-126 .3-28 .1-56-1-84-.3-5.2 7.8-5.2 8.1 0 1.1 28 1.3 56 1 84-.4 42-1.2 84-2 126-.4 5.2-7.7 5.2-8.1 0Z" />
+      <Leaf cx={40} cy={52} rx={15} ry={12} rot={-36} />
+      <Leaf cx={80} cy={56} rx={14} ry={11} rot={38} />
+      <Leaf cx={38} cy={96} rx={16} ry={13} rot={-30} />
+      <Leaf cx={82} cy={100} rx={15} ry={12} rot={34} />
+      <Leaf cx={36} cy={142} rx={17} ry={13.5} rot={-26} />
+      <Leaf cx={84} cy={146} rx={16} ry={13} rot={30} />
+      <Leaf cx={40} cy={188} rx={15} ry={12} rot={-32} />
+      <Leaf cx={80} cy={192} rx={14} ry={11} rot={36} />
+      <Leaf cx={44} cy={226} rx={13} ry={10} rot={-28} />
+      <Leaf cx={76} cy={230} rx={12} ry={9.5} rot={32} />
+    </g>,
+    // Branching forked tip with slender leaves
+    <g key="branching">
+      <Stem d="M50 248c1-40 2.4-80 4.2-118 1.6-32 7-62 20-86 2.4-4.4 9-1.2 7.2 2.8C69 70 64 98 62.4 128 60.6 166 59.2 206 58 248c-.4 5.2-7.7 5.2-8 0Z" />
+      <path
+        fill="currentColor"
+        d="M62 96c16-24 38-40 62-44 4.4-.8 6 5.8 1.8 7-21.5 5.5-40 19-53.5 40-2.6 4-10 1.2-8.3-4Z"
+      />
+      <Leaf cx={78} cy={54} rx={6} ry={17} rot={-18} />
+      <Leaf cx={98} cy={44} rx={5.5} ry={16} rot={8} />
+      <Leaf cx={116} cy={48} rx={5.5} ry={15} rot={28} />
+      <Leaf cx={128} cy={62} rx={5} ry={14} rot={42} />
+      <Leaf cx={40} cy={118} rx={7} ry={19} rot={-34} />
+      <Leaf cx={72} cy={130} rx={7} ry={18} rot={32} />
+      <Leaf cx={38} cy={168} rx={7.5} ry={20} rot={-30} />
+      <Leaf cx={74} cy={180} rx={7} ry={18} rot={34} />
+      <Leaf cx={44} cy={214} rx={6.5} ry={16} rot={-28} />
+    </g>,
+  ];
+
+  return (
+    <svg
+      viewBox="0 0 140 260"
+      fill="currentColor"
+      className={className}
+      style={style}
+      aria-hidden
+    >
+      {sprigs[variant] ?? sprigs[0]}
     </svg>
   );
 }

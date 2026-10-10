@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/BrandLogo";
 import { site } from "@/content/site";
+import { pageShellClass } from "@/lib/layout";
 
 const links = [
   { label: "Work", href: "/#case-studies" },
@@ -12,7 +13,7 @@ const links = [
 export function SiteNav({ activeHref }: { activeHref?: string }) {
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-paper/90 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-3.5 sm:px-8">
+      <div className={`${pageShellClass} flex items-center justify-between gap-6 py-3.5`}>
         <Link
           href="/"
           aria-label={site.fullName}

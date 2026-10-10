@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { processSteps } from "@/content/site";
 import { Reveal } from "@/components/Reveal";
+import { pageShellClass } from "@/lib/layout";
 
 export function DesignProcess() {
   const reduce = useReducedMotion();
@@ -11,7 +12,7 @@ export function DesignProcess() {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="mx-auto w-full max-w-5xl px-6 py-20 sm:px-8 sm:py-28"
+      className={`${pageShellClass} py-20 sm:py-28`}
     >
       <Reveal>
         <p className="text-sm font-medium tracking-[0.16em] text-muted">

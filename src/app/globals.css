@@ -47,6 +47,8 @@ body {
   overflow-y: auto;
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
+  /* Keep fixed nav logo and page/footer content on the same left edge */
+  scrollbar-gutter: stable;
 }
 
 ::selection {

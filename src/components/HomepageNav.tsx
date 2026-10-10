@@ -43,13 +43,16 @@ export function HomepageNav() {
     <AnimatePresence>
       {visible ? (
         <motion.div
-          className="fixed inset-x-0 top-0 z-50"
+          className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center"
           initial={reduceMotion ? false : { opacity: 0, y: -24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -24 }}
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
         >
-          <SiteNav />
+          {/* Match .app-scroll content width so the logo lines up with section/footer margins */}
+          <div className="pointer-events-auto w-full [scrollbar-gutter:stable]">
+            <SiteNav />
+          </div>
         </motion.div>
       ) : null}
     </AnimatePresence>

@@ -1,15 +1,15 @@
 import Image from "next/image";
-import { caseStudies, otherProjects } from "@/content/site";
+import { caseStudies } from "@/content/site";
 import { Reveal } from "@/components/Reveal";
 import { ViewCaseStudyCursor } from "@/components/ViewCaseStudyCursor";
-import { withBasePath } from "@/lib/basePath";
+import { pageShellClass } from "@/lib/layout";
 
 export function CaseStudies() {
   return (
     <section
       id="case-studies"
       aria-labelledby="case-studies-heading"
-      className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-8 sm:py-28"
+      className={`${pageShellClass} py-20 sm:py-28`}
     >
       <Reveal>
         <p
@@ -71,54 +71,6 @@ export function CaseStudies() {
           </Reveal>
         ))}
       </div>
-
-      <Reveal className="mt-24 sm:mt-32">
-        <p className="text-sm font-medium tracking-[0.16em] text-muted">
-          OTHER PROJECTS
-        </p>
-        <ul className="mt-8 divide-y divide-line border-y border-line">
-          {otherProjects.map((project) => {
-            const isExternal = project.href.startsWith("http");
-
-            return (
-            <li key={project.title}>
-              <a
-                href={withBasePath(project.href)}
-                {...(isExternal
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className="group flex flex-col gap-4 px-4 py-6 transition hover:bg-white/50 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:px-6"
-              >
-                <div className="flex items-center gap-4 sm:gap-5">
-                  <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-xl border border-line bg-surface sm:h-20 sm:w-28">
-                    <Image
-                      src={project.image}
-                      alt={project.imageAlt}
-                      fill
-                      unoptimized
-                      sizes="112px"
-                      className="object-cover transition duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-ink">
-                      {project.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-muted">{project.context}</p>
-                  </div>
-                </div>
-                <span
-                  aria-hidden
-                  className="self-end text-xl text-muted transition group-hover:translate-x-1 group-hover:text-accent sm:self-center"
-                >
-                  →
-                </span>
-              </a>
-            </li>
-            );
-          })}
-        </ul>
-      </Reveal>
     </section>
   );
 }
