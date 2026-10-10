@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { hero, site } from "@/content/site";
-import { HeroProjectOrbit } from "@/components/HeroProjectOrbit";
+import { HeroJoyConScroller } from "@/components/HeroJoyConScroller";
 import { withBasePath } from "@/lib/basePath";
 
 export function Hero() {
@@ -67,7 +67,7 @@ export function Hero() {
         transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
         aria-label="Selected work"
       >
-        <HeroProjectOrbit />
+        <HeroJoyConScroller />
       </motion.div>
     </header>
   );

@@ -11,7 +11,7 @@ export function DesignProcess() {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="mx-auto w-full max-w-5xl px-6 py-20 sm:px-8 sm:py-28"
+      className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-8 sm:py-28"
     >
       <Reveal>
         <p className="text-sm font-medium tracking-[0.16em] text-muted">
