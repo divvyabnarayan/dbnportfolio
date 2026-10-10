@@ -4,12 +4,13 @@ import { motion, useReducedMotion } from "framer-motion";
 import { hero, site } from "@/content/site";
 import { HeroJoyConScroller } from "@/components/HeroJoyConScroller";
 import { withBasePath } from "@/lib/basePath";
+import { pageShellClass } from "@/lib/layout";
 
 export function Hero() {
   const reduce = useReducedMotion();
 
   return (
-    <header className="relative mx-auto grid min-h-[100svh] w-full max-w-6xl items-center gap-10 overflow-x-hidden px-6 pb-20 pt-24 sm:px-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,0.95fr)] lg:gap-8 lg:overflow-x-visible lg:pb-16 lg:pt-20">
+    <header className={`relative grid min-h-[100svh] items-center gap-10 overflow-x-hidden pb-20 pt-24 ${pageShellClass} lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,0.95fr)] lg:gap-8 lg:overflow-x-visible lg:pb-16 lg:pt-20`}>
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-16 -z-10 mx-auto h-72 max-w-3xl rounded-full bg-[radial-gradient(circle,rgba(45,212,191,0.22),transparent_70%)] blur-2xl lg:left-0 lg:mx-0 lg:translate-x-0"

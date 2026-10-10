@@ -2,13 +2,14 @@ import Image from "next/image";
 import { caseStudies } from "@/content/site";
 import { Reveal } from "@/components/Reveal";
 import { ViewCaseStudyCursor } from "@/components/ViewCaseStudyCursor";
+import { pageShellClass } from "@/lib/layout";
 
 export function CaseStudies() {
   return (
     <section
       id="case-studies"
       aria-labelledby="case-studies-heading"
-      className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-8 sm:py-28"
+      className={`${pageShellClass} py-20 sm:py-28`}
     >
       <Reveal>
         <p

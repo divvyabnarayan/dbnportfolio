@@ -5,6 +5,7 @@ import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { toolboxTools } from "@/content/site";
 import { Reveal } from "@/components/Reveal";
+import { pageShellClass } from "@/lib/layout";
 
 function useOrbitScale() {
   const [scale, setScale] = useState(1);
@@ -37,7 +38,7 @@ export function ToolsSkills() {
     <section
       id="tools"
       aria-labelledby="tools-heading"
-      className="relative mx-auto w-full max-w-6xl px-6 py-20 sm:px-8 sm:py-28"
+      className={`relative ${pageShellClass} py-20 sm:py-28`}
     >
       <div
         aria-hidden
