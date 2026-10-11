@@ -75,6 +75,8 @@ function HorizontalJoyCon({
 
 function ProjectCard({ project }: { project: Project }) {
   const isExternal = project.href.startsWith("http");
+  // Nudge Flip cover right so "Australian Telecom" has space from the frame edge.
+  const isFlipDesignSystem = project.href.includes("flip-design-system");
 
   return (
     <a
@@ -83,15 +85,22 @@ function ProjectCard({ project }: { project: Project }) {
       aria-label={project.title}
       className="relative block h-full w-full overflow-hidden rounded-[1.35rem]"
     >
-      <Image
-        src={project.image}
-        alt={project.imageAlt}
-        fill
-        unoptimized
-        sizes="320px"
-        className="object-cover"
-        priority
-      />
+      <div className="absolute inset-0">
+        <Image
+          src={project.image}
+          alt={project.imageAlt}
+          fill
+          unoptimized
+          sizes="384px"
+          className={
+            isFlipDesignSystem
+              ? // Card is slightly taller than 16:10, so pin left to keep the type inset.
+                "object-cover object-left"
+              : "object-cover object-center"
+          }
+          priority
+        />
+      </div>
     </a>
   );
 }
@@ -186,7 +195,7 @@ export function HeroJoyConScroller() {
     >
       <div
         ref={viewportRef}
-        className="relative h-[17.5rem] w-full max-w-[20rem] overflow-hidden sm:h-[20.5rem] sm:max-w-[22rem]"
+        className="relative aspect-[16/10] w-full max-w-[22rem] overflow-hidden sm:max-w-[24rem]"
       >
         <motion.div className="flex h-full" style={{ x: trackX }}>
           {slides.map((project, slideIndex) => (

@@ -62,7 +62,7 @@ export function Hero() {
       </div>
 
       <motion.div
-        className="relative min-h-[22rem] sm:min-h-[28rem] lg:min-h-[32rem]"
+        className="relative min-h-[20rem] sm:min-h-[24rem] lg:min-h-[28rem]"
         initial={reduce ? false : { opacity: 0, x: 28 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
