@@ -31,9 +31,16 @@ const quote = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Divvya — UX Designer",
-  description:
-    "Portfolio of Divvya, a UX designer crafting clarity for products people love.",
+  title: "Portfolio of Divvya",
+  description: "Digital Designer",
+  openGraph: {
+    title: "Portfolio of Divvya",
+    description: "Digital Designer",
+  },
+  twitter: {
+    title: "Portfolio of Divvya",
+    description: "Digital Designer",
+  },
 };
 
 export default function RootLayout({
