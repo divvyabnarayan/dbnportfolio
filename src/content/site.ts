@@ -49,26 +49,6 @@ export const caseStudies: CaseStudy[] = [
     imageAlt: "Australian Telecom design system with typography, colour, buttons, and components",
   },
   {
-    title: "Little Sprout",
-    description:
-      "A pregnancy tracker that centralizes health data, symptom and medicine tracking, appointments, wellness support, and communication with doctors and caregivers.",
-    tags: ["UI/UX", "Prototyping", "User Testing"],
-    slug: "little-sprout",
-    href: "/work/little-sprout",
-    image: "/projects/little-sprout/solution-slide-18.jpg",
-    imageAlt: "Little Sprout low-fidelity wireframes from slide 18",
-  },
-  {
-    title: "Amigo",
-    description:
-      "A gamified task management app helping kids aged 5–13 track academic work, earn rewards, and build confidence with parent visibility built in.",
-    tags: ["UI Design", "Visual Design", "Figma"],
-    slug: "amigo",
-    href: "/work/amigo",
-    image: "/projects/amigo/work-card-logo.png",
-    imageAlt: "Amigo logo on a dark background",
-  },
-  {
     title: "Talhive Branding",
     description:
       "A logo and visual identity for a human capital firm that finds talent who fit both the role and the culture.",
@@ -88,6 +68,26 @@ export const caseStudies: CaseStudy[] = [
     image: "/projects/tea-catalog/cover.jpg",
     imageAlt: "Silk Brew Tea catalogue cover",
   },
+  {
+    title: "Little Sprout",
+    description:
+      "A pregnancy tracker that centralizes health data, symptom and medicine tracking, appointments, wellness support, and communication with doctors and caregivers.",
+    tags: ["UI/UX", "Prototyping", "User Testing"],
+    slug: "little-sprout",
+    href: "/work/little-sprout",
+    image: "/projects/little-sprout/solution-slide-18.jpg",
+    imageAlt: "Little Sprout low-fidelity wireframes from slide 18",
+  },
+  {
+    title: "Amigo",
+    description:
+      "A gamified task management app helping kids aged 5–13 track academic work, earn rewards, and build confidence with parent visibility built in.",
+    tags: ["UI Design", "Visual Design", "Figma"],
+    slug: "amigo",
+    href: "/work/amigo",
+    image: "/projects/amigo/work-card-logo.png",
+    imageAlt: "Amigo logo on a dark background",
+  },
 ];
 
 export type OtherProject = {
@@ -99,24 +99,7 @@ export type OtherProject = {
   imageAlt: string;
 };
 
-export const otherProjects: OtherProject[] = [
-  {
-    title: "Toyx: A Toy Exchange App",
-    context: "App Design",
-    tags: ["product design", "research"],
-    href: "https://www.behance.net/gallery/146008203/Toyx-A-Toy-Exchange-App",
-    image: "/projects/toyx/cover.png",
-    imageAlt: "Toyx toy exchange app cover",
-  },
-  {
-    title: "Zest: A Chocolate App Design",
-    context: "AR App Design",
-    tags: ["product design", "mobile app"],
-    href: "https://www.behance.net/gallery/174255055/Zest-A-Chocolate-App-Design",
-    image: "/projects/zest/cover.png",
-    imageAlt: "Zest chocolate app design cover",
-  },
-];
+export const otherProjects: OtherProject[] = [];
 
 export const heroProjects = [
   ...caseStudies.map(({ title, href, image, imageAlt, tags }) => ({
